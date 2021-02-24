@@ -1,10 +1,10 @@
 /*
     g++ main.cpp Graph.cpp Window.cpp GUI.cpp Simple_window.cpp -o main `fltk-config --ldflags --use-images`
 */
-#include "Simple_window.h"
-#include "Graph.h"
+#include "../source/Simple_window.h"
+#include "../source/Graph.h"
 #include<exception>
-#include "std_lib_facilities.h"
+#include "../source/std_lib_facilities.h"
 
 int main()
 try {
