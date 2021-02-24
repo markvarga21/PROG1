@@ -1,0 +1,10 @@
+- a cpp-k a header filok mellett implementacios kodok, fajlok 
+- deklaralni headerbe definialni cpp-be
+- forumba van egy meno teas xD am
+- esetleg lesz felvetel a szerda 10es orarol?
+- a lines egyfalyta Shape(absztrakt osztaly)
+- ,,::,, hatokor operator
+- az Open_polyline egyfalyta shape? wtf, nem forditva?
+- Closed_poly lehet ossze vissza is 
+- new-al peldanyositani wut?
+
