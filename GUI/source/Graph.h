@@ -305,6 +305,116 @@ struct Axis : Shape {
 	Text label;
 	Lines notches;
 };
+//-----------------------------------------------------
+class Arc : public Shape
+{
+	Point center;
+	float radius;
+	float start;
+	float end;
+public:
+	Arc(Point c, double r, double s, double e) : center(c), radius(r), start(s), end(e) { add(c); }; //Add center point to shape
+	void draw_lines() const;
+};
 
-}
+struct Round_box : public Shape
+{
+	Round_box(Point origin, int width, int height, int radius) : o(origin), w(width), h(height), r(radius){
+		a1 = Point(o.x + r, o.y); //milyen lenne atirva {}-re
+
+		b1 = Point(o.x + w - r, o.y);
+		b2 = Point(o.x + w, o.y + r);
+
+		c1 = Point(o.x + w, o.y + h - r);
+		c2 = Point(o.x + w - r, o.y + h);
+
+		d1 = Point(o.x + r, o.y + h);
+		d2 = Point(o.x, o.y + h - r);
+
+		a2 = Point(o.x, o.y + r);
+
+		a3 = Point(o.x + r, o.y + r);
+		b3 = Point(o.x + w - r, o.y + r);
+		c3 = Point(o.x + w - r, o.y + h - r);
+		d3 = Point(o.x + r, o.y + h - r);
+	};
+
+	void draw_lines() const;
+
+private:
+	Point o;
+	Point a1, a2, b1, b2, c1, c2, d1, d2;
+	Point a3, b3, c3, d3;
+	int w, h, r;
+};
+
+// ARROW CLASS
+double pointVecMag2(Point vec);
+
+struct Arrow : public Shape
+{
+	Arrow(Point start, Point end, bool s, bool e, int size) :
+		start(start), end(end), s(s), e(e), size(size) 
+	{
+		if (s){
+			//end-start vector: c
+			c = Point(end.x - start.x, end.y - start.y); // origoba helyezett vektor, forditott iranyitassal
+			cMag = pointVecMag2(c); //vektor hossz szamito
+			cUnit = Point(c.x/cMag * size, c.y / cMag * size); //transzformalt vektora a c-nek (meghoszabbitottja), azonos iranyitassal
+			cTrans = Point(cUnit.x, cUnit.y); //cUnit masolata, az egyszerusites kedveert
+
+			//Arrow head start
+			//ha nagyobb lenne a size nylvan kijjebb menne ez a pont, tavolabbra
+			cPerp = Point(-cTrans.y, cTrans.x); //(Perp mint perpendicular; c Origobol indulo vektorra meroleges, ha Origobol kotom ossze a ket pontot
+			arrowhead01 = Point(start.x + cPerp.x + cTrans.x, start.y + cPerp.y + cTrans.y); //matek reszek, tukrozes meg miegymas
+			arrowhead02 = Point(start.x - cPerp.x + cTrans.x, start.y - cPerp.y + cTrans.y); //matek reszek, tukrozes meg miegymas
+		}
+
+		if (e){
+			//start-end vector: d
+			d = Point(start.x - end.x, start.y - end.y);
+			dMag = pointVecMag2(d);
+			dUnit = Point(d.x/dMag * size, d.y/dMag * size);
+			dTrans = Point(dUnit.x, dUnit.y);
+
+			//Arrow head End
+			dPerp = Point(-dTrans.y, dTrans.x);
+			arrowhead03 = Point(end.x + dPerp.x + dTrans.x, end.y + dPerp.y + dTrans.y);
+			arrowhead04 = Point(end.x - dPerp.x + dTrans.x, end.y - dPerp.y + dTrans.y);
+		}
+	};
+
+	void draw_lines() const;
+
+private:
+	//Line
+	Point start;
+	Point end;
+	//Arrowhead at start
+	Point c;
+	Point cUnit;
+	Point cTrans;
+	Point cPerp;
+	double cMag;
+
+	Point arrowhead01;
+	Point arrowhead02;
+
+	//Arrowhead at end
+	Point d;
+	Point dUnit;
+	Point dTrans;
+	Point dPerp;
+	double dMag;
+
+	Point arrowhead03;
+	Point arrowhead04;
+
+	bool s;
+	bool e;
+	int size;
+};
+
+//--------------------------------------------------------
+} // end of Graph_lib
 #endif
