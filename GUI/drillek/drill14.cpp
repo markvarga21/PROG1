@@ -49,9 +49,7 @@ try {
 	B1 b;
 	b.vf();
 	b.f();
-
 	cout << endl;
-	
 	D1 d;
 	d.vf();
 	d.f();
