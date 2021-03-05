@@ -1,5 +1,5 @@
 /*
-    g++ drill13.cpp ../source/Graph.cpp ../source/Window.cpp ../source/GUI.cpp ../source/Simple_window.cpp -o drill13 `fltk-config --ldflags --use-images`
+    g++ ch13-ex.cpp ../source/Graph.cpp ../source/Window.cpp ../source/GUI.cpp ../source/Simple_window.cpp -o ch13-ex `fltk-config --ldflags --use-images`
 */
 #include "../source/Simple_window.h"
 #include "../source/Graph.h"
