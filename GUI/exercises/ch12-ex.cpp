@@ -29,15 +29,24 @@ try {
 	// end of 2.
 
 	// 3.
-	Text initV{Point{50, w_height-150}, "V"};
-	Text initM{Point{75, w_height-150}, "M"};
-	initV.set_color(Color::blue);
-	initV.set_font(Font::times_bold);
-	initV.set_font_size(30);
+	Open_polyline initV;
+    initV.add(Point{520,400});
+    initV.add(Point{550,480});
+    initV.add(Point{580,400});
+    initV.set_color(Color::blue);
+    initV.set_style(Line_style(Line_style::solid, 6));
 
-	initM.set_color(Color::green);
-	initV.set_font(Font::times_bold);	
-	initM.set_font_size(30);
+    Open_polyline initM;
+    initM.add(Point{600,480});
+    initM.add(Point{600,400});
+
+    initM.add(Point{625, 440});
+
+	initM.add(Point{650,400});
+    initM.add(Point{650,480});
+
+    initM.set_color(Color::green);
+    initM.set_style(Line_style(Line_style::solid, 6));
 	//end of 3.
 
 	// 4.
