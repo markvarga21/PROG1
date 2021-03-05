@@ -336,6 +336,23 @@ void Round_box::draw_lines() const
 	}
 }
 
+void Box_text::draw_lines() const
+{
+	if(color().visibility()){
+		fl_line(a1.x, a1.y, b1.x, b1.y);
+		fl_line(b2.x, b2.y, c1.x, c1.y);
+		fl_line(c2.x, c2.y, d1.x, d1.y);
+		fl_line(d2.x, d2.y, a2.x, a2.y);
+
+		fl_arc(o.x, o.y, r+r, r+r, 90, 180); //bal felso
+		fl_arc(o.x + w - (r+r), o.y, r+r, r+r, 0, 90); //jobb felso
+		fl_arc(o.x + w - (r+r), o.y + h - (r+r), r+r, r+r, 270, 360); //jobb also
+		fl_arc(o.x, o.y + h - (r+r), r+r, r+r, 180, 270); //bal also
+	}
+
+	fl_draw(lab.c_str(), d1.x + w/7, d1.y - h/2 + 5); // az 5 az miatt kell hogy szebben jojjon ki kozepre
+}
+
 double pointVecMag2(Point vec){
 	return sqrt(pow(vec.x, 2) + pow(vec.y, 2));
 }
