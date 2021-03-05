@@ -415,6 +415,43 @@ private:
 	int size;
 };
 
+struct Box_text : public Shape
+{
+	Box_text(Point origin, string ss, int radius) : o(origin), lab(ss), r(radius), w(ss.size()*12), h(30)
+	{
+		a1 = Point(o.x + r, o.y); //milyen lenne atirva {}-re
+
+		b1 = Point(o.x + w - r, o.y);
+		b2 = Point(o.x + w, o.y + r);
+
+		c1 = Point(o.x + w, o.y + h - r);
+		c2 = Point(o.x + w - r, o.y + h);
+
+		d1 = Point(o.x + r, o.y + h);
+		d2 = Point(o.x, o.y + h - r);
+
+		a2 = Point(o.x, o.y + r);
+
+		a3 = Point(o.x + r, o.y + r);
+		b3 = Point(o.x + w - r, o.y + r);
+		c3 = Point(o.x + w - r, o.y + h - r);
+		d3 = Point(o.x + r, o.y + h - r);
+	};
+
+	void draw_lines() const;
+
+	int get_width() const { return w; }
+	int get_heigth() const { return h; }
+	int get_radius() const { return r; }
+
+private:
+	string lab;
+	Point o;
+	Point a1, a2, b1, b2, c1, c2, d1, d2;
+	Point a3, b3, c3, d3;
+	int w, h, r;
+};
+
 //--------------------------------------------------------
 } // end of Graph_lib
 #endif
