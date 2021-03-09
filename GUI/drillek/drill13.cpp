@@ -44,9 +44,9 @@ try {
     // 3. feladat vege
     
     // 4. feladat
-    Image i1{Point{0, 0}, "kep200.jpg"};
-    Image i2{Point{200, 200}, "kep200.jpg"};
-    Image i3{Point{400,400}, "kep200.jpg"};
+    Image i1{Point{0, 200}, "kep200.jpg"};
+    Image i2{Point{200, 400}, "kep200.jpg"};
+    Image i3{Point{400,200}, "kep200.jpg"};
     // 4. feladat vege
 
     win.attach(grid); //2
