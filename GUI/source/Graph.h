@@ -295,6 +295,29 @@ struct Function : Shape {
 	Function(Fct f, double r1, double r2, Point orig, int count = 100, double xscale = 25, double yscale = 25);
 };
 
+/*struct myFct : Shape {
+	myFct(Fct ff, double rr1, double rr2, Point oorig, int ccount = 100, double xxscale = 25, double yyscale = 25);
+	void reset(Fct ff2, double rr11, double rr22, Point oorig2, int ccount2 = 100, double xxscale2 = 25, double yyscale2 = 25)
+	{
+		f = ff2;
+		r1 = rr1;
+		r2 = rr2;
+		orig = orig2;
+		count = ccount2;
+		xscale = xxscal2;
+		yscal = yyscale2;
+	}
+private:
+	Fct f;
+	double r1;
+	double r2;
+	Point orig;
+	int count;
+	double xscale;
+	double yscale;
+};
+*/
+
 struct Axis : Shape {
 	enum Orientation { x, y, z };
 	Axis (Orientation d, Point xy, int length, int number_of_notches = 0, string label = "");

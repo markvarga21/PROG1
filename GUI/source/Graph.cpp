@@ -252,6 +252,18 @@ Function::Function(Fct f, double r1, double r2, Point xy, int count, double xsca
 	}
 }
 
+/*myFct::myFct(Fct ff, double rr1, double rr2, Point oorig, int ccount = 100, double xxscale = 25, double yyscale = 25)
+{
+	if (r2-r1<=0) error ("Rossz range!");
+	if (count<=0) error ("Rossz count!");
+	double dist = (r2-r1)/count;
+	double r = r1;
+	for (int i = 0; i < count; ++i){
+		add(Point(xy.x+int(r*xscale), xy.y-int(f(r)*yscale)));
+		r += dist;
+	}
+}*/
+
 Axis::Axis(Orientation d, Point xy, int length, int n, string lab )
 	:label(Point(0,0), lab)
 {
