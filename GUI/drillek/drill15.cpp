@@ -30,10 +30,8 @@ try {
     const int axis_length = 400;
     const int notch = 20;
     const int eltolas = 200;
-    Axis ax{Axis::x, Point{300-eltolas, 300}, axis_length, notch};
+    Axis ax{Axis::x, Point{300-eltolas, 300}, axis_length, notch, "1 == 20 pixels"};
     Axis ay{Axis::y, Point{300, 300+eltolas}, axis_length, notch};
-
-    Text lab{Point{150, 330}, "1 == 20 pixels"};
     //4 vege
 
     //feladat 5
@@ -55,15 +53,14 @@ try {
 
     Function square_f{square, lrange, rrange, Point{300, 300}, n_points, x_scale, y_scale}; //mivel a feladat azt kerte, hogy a range, notch stb. mindegyiknel ugyan azok legyenek, ezert az x^2 fuggveny joval az ablakon kivul van
 
+    //fuggveny megadasa lambda segitsegevel
     Function cos_f{[] (double x) {return cos(x); }, lrange, rrange, Point{300, 300}, n_points, x_scale, y_scale};
     cos_f.set_color(Color::blue);
 
     Function cos_slope{sloping_cos, lrange, rrange, Point{300, 300}, n_points, x_scale, y_scale};
     //---------------------------------- PART 2 VEGE ----------------------------------------
 
-
-
-    win.attach(egyseg_f); win.attach(lab);
+    win.attach(egyseg_f);
     win.attach(ax); win.attach(ay);
     win.attach(slope_f); win.attach(lab2);
     win.attach(square_f);
