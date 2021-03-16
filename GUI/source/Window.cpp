@@ -27,7 +27,7 @@ void Window::init()
 void Window::draw()
 {
 	Fl_Window::draw();
-	for (unsigned int i=0; i<shapes.size(); ++i) shapes[i]->draw();
+	for (unsigned int i=0; i<shapes.size(); ++i) shapes[i]->draw(); //minden egyes shapenek a draw fg-e
 }
 
 void Window::attach(Widget& w)

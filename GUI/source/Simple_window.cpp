@@ -22,6 +22,8 @@ bool Simple_window::wait_for_button()
 // modified event loop:
 // handle all events (as per default), quit when button_pushed becomes true
 // this allows graphics without control inversion
+//compiler cuccos
+//elofordito deklaracio
 {
     show();
     button_pushed = false;
@@ -42,7 +44,7 @@ bool Simple_window::wait_for_button()
 void Simple_window::cb_next(Address, Address pw)
 // call Simple_window::next() for the window located at pw
 {  
-    reference_to<Simple_window>(pw).next();    
+    reference_to<Simple_window>(pw).next();  //castolas  
 }
 
 //------------------------------------------------------------------------------
