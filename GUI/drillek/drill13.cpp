@@ -22,6 +22,7 @@ try {
     const int grid_x = 100;
     const int grid_y = 100;
     Lines grid;
+    //--------------------- GRID -------------------
     //vertical
     for (int i = 0; i <= heigth; i+=grid_x)
         grid.add(Point{i,0}, Point{i, heigth});
@@ -30,10 +31,8 @@ try {
         grid.add(Point{0,i}, Point{heigth, i});
     // 2. feladat vege
 
-    //a constot tudjuk valtoztatni pl const int image = valtoz(a);
-    // a constexpr ismernunk kell forditasi idoben az erteket
-
     // 3. feladat
+    //Nevtelen objektumok segitsegevel letrehozott grid kitoltes
     Vector_ref<Rectangle> rect;
     for (int i = 0; i < 8; ++i){
         rect.push_back(new Rectangle({i*grid_x, i*grid_y}, grid_x, grid_y));
