@@ -14,7 +14,6 @@ struct Lines_window : Graph_lib::Window
 	//Buttonok
 	Button menu_button;
 	Button line_style_menu_button;
-	//line width changing vedesre?
 
 	//--------------------- CALLBACKS --------------------
 	//Color's callbacks
@@ -45,8 +44,6 @@ struct Lines_window : Graph_lib::Window
 	void dotted_pressed() { change_line_style(Line_style::dot); hide_line_style_menu(); }
 	void dash_pressed() { change_line_style(Line_style::dash); hide_line_style_menu(); }
 	void line_style_menu_pressed() { line_style_menu_button.hide(); line_style_menu.show(); }
-
-	bool wait_for_button();
 
 private:
 	Button next_button;
