@@ -56,7 +56,7 @@ try {
     win.attach(kicsikep);
 
     int cnt = 1;
-    while (cnt <= 64){
+    while (cnt < 64){
         win.wait_for_button();
         if (cnt % 8 == 0) kicsikep.move(-800, 100);   
         kicsikep.move(100, 0);
