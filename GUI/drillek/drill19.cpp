@@ -28,10 +28,7 @@ istream& operator>>(istream& is, S<T>& tt){
 	return is;
 }
 
-template<typename T> void read_val(T& v)
-{
-	cin >> v;
-}
+template<typename T> void read_val(T& v) { cin >> v; }
 
 int main()
 try {
@@ -39,42 +36,44 @@ try {
 	S<char> charr {'c'};
 	S<double> doublee {3.1415};
 	S<string> stringg {"alma"};
-	//S<vector<int>> vecc { {3, 4, 5, 6} };
+	S<vector<int>> vecc { {3, 4, 5, 6} };
 
 	// 4-es feladat
 	//cout << intt.val << " " << charr.val << " " << doublee.val << " " << stringg.val << endl;
 
 	//cout << intt.get() << endl;
 
-	// 8-as feladat
-	//cout << intt.get() << " " << charr.get() << " " << doublee.get() << " " << stringg.get() << endl;
-	//cout << vecc.get();
+	cout << "8-as feladat" << endl;
+	cout << intt.get() << " " << charr.get() << " " << doublee.get() << " " << stringg.get() << endl;
+	vector<int> local = vecc.get();
+	for (auto n : local) cout << n << " ";
+	cout << endl;
 
-	// 9-es feladat
-	/*cout << "Regi intt: " << intt.get() << endl;
+	/*
+	cout << "9-es feladat" << endl;
+	cout << "Regi intt: " << intt.get() << endl;
 	intt.set(10);
 	cout << intt.get() << endl;
 	*/
-	
-	// 10-es feladat
-	/*S<int> masik {25};
+
+	cout << "10-es feladat" << endl;
+	S<int> masik {25};
 	cout << "Regi intt: " << intt.get() << endl;
 	intt = masik;
-	cout << "Uj intt: " << intt.get() << endl;*/
+	cout << "Uj intt: " << intt.get() << endl;
 
-	// 11-es teszt
-	/*const S<int> a {36};
-	cout << a.get() << endl;*/
+	cout << "11-es teszt" << endl;
+	const S<int> a {36};
+	cout << a.get() << endl;
 
-	// 13-as feladat
-	/*S<int> i;
+	cout << "13-as feladat" << endl;
+	S<int> i;
 	S<double> d;
 	S<string> s;
 	S<char> c;
+	cout << "Kerem irja be a tipusnak megfelelo ertekeket (int, double, string, char): " << endl;
 	read_val(i); read_val(d); read_val(s); read_val(c);
 	cout << i.get() << " " << d.get() << " " << s.get() << " " << c.get() << endl;
-	*/
-
 
 	return 0;
 } catch (exception& e) {
