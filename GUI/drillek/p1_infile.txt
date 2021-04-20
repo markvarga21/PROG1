@@ -1,0 +1,10 @@
+telefon 1 2000
+ajto 23 1000
+laptop 56 20012.1
+lampa 2 3300
+monitor 8 5600.61
+ceruza 77 500
+billentyuzet 9 5550.81
+taska 22 1000.22
+fuzet 3 90.5
+golyostoll 66 100.5
