@@ -1,25 +1,28 @@
-#include<isotream>
+#include<iostream>
 #include<vector>
 
 using namespace std;
 
 template<typename Elem>
 struct Link {
+	Link(const Elem& v = Elem(), Link* p = 0, Link* s = 0) :prev(p), succ(s), val(v) {}
+
 	Link* prev; // elozo
 	Link* succ; // kovetkezo
 	Elem val; // maga az ertek
 };
 
 template<typename Elem>
-class List {
-private:
+struct my_list {
 	Link<Elem>* first;
 	Link<Elem>* last; // utolso utanira mutat
-public:
+
+	my_list(): first(new Link<Elem>()), last(first) {}
+
 	class iterator; // member type: iterator
 
-	iterator begin(); // iterator ami az elso elemre mutat
-	iterator end(); // iterator ami az utolso utanira mutat
+	iterator begin() { return iterator(first); } // iterator ami az elso elemre mutat
+	iterator end() { return iterator(last); } // iterator ami az utolso utanira mutat
 
 	iterator insert(iterator p, const Elem& v); // insert v into list after p
 	iterator erase(iterator p); // remove p from list
@@ -29,12 +32,12 @@ public:
 	void pop_front(); // remove the first element
 	void pop_back(); // remove the last element;
 
-	Elem& front(); // the first element
+	Elem& front() { return *first; } // the first element
 	Elem& back(); // the last element
 };
 
-template<typename ELem>
-class list<Elem>::iterator {
+template<typename Elem>
+class my_list<Elem>::iterator {
 private:
 	Link<Elem>* curr; // current link
 public:
@@ -44,15 +47,21 @@ public:
 	iterator& operator--() { curr = curr->prev; return *this; } // visszafele
 	Elem& operator*() { return curr->val; } // get the value; dereference
 
-	bool operator==(const iterator& b) const { return cur == b.curr; }
-	bool operator!=(const iterator& b) const { return cur != b.curr; }
+	bool operator==(const iterator& b) const { return curr == b.curr; }
+	bool operator!=(const iterator& b) const { return curr != b.curr; }
 };
 
-template<typename Iter>
-Iterator high(Iter first, Iter last) // return an iterator to the element in [first, last), that has the highest value
+template<typename Elem>
+void my_list<Elem>::push_front(const Elem& v)
+{
+	first = new Link<Elem>(v, 0, first); 
+}
+
+template<typename Iterator>
+Iterator high(Iterator first, Iterator last) // return an iterator to the element in [first, last), that has the highest value
 {
 	Iterator high = first;
-	for (Iterator p; p != last; ++p)
+	for (Iterator p = first; p != last; ++p)
 	{
 		if (*high < *p) high = p;
 	}
@@ -61,7 +70,13 @@ Iterator high(Iter first, Iter last) // return an iterator to the element in [fi
 
 int main()
 try {
+	my_list<int> ls;
+	for (int i = 0; cin >> i; )
+		ls.push_front(i);
 
+	my_list<int>::iterator highest = high(ls.begin(), ls.end());
+
+	cout << "Highest value: " << *highest << endl;
 
 	return 0;
 } catch(exception& e) {
