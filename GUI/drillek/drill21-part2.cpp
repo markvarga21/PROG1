@@ -55,7 +55,7 @@ try {
 
 	// reading value pairs
 	cout << "Please enter 10 pairs of 'string' and 'int': " << endl;
-	constexpr int how_many = 2;
+	constexpr int how_many = 10;
 	for (int i = 0; i < how_many; ++i) read_val(msi);
 	format();
 	// printing out these elements
