@@ -115,6 +115,33 @@ Text_iterator find_text(Text_iterator first, Text_iterator last, const string& s
 	}
 }
 
+void find_replace(Text_iterator first, Text_iterator last, const string& to_replace_str, const string& replace_str)
+{
+	Text_iterator p = find_text(first, last, to_replace_str); // iterator a cserelendo szovegre
+	if (p == last) return; // nincs benne a cserelendo string
+
+	Line& li = p.get_line(); // melyik sorban van a cserelendo szo; itt megkapom magat a line-t
+
+	// van-e a li-nek elegendo helye hogy cserelhessunk?
+	const int diff = replace_str.size()-to_replace_str.size();
+	// ha nem ferne el a string, foglalunk neki helyet
+	if (diff > 0 && li.size()+diff > li.capacity()) // mint a vektornal, amikor duplaztunk, van a size es a capacity (hogy mennyi fer meg el)
+	{
+		li.reserve(li.size()+diff); // memoriafoglalas
+	}
+
+	p = find_text(first, last, to_replace_str); // ujra megkeresem az allokalas miatt
+
+	auto q = p.get_pos(); // adott pozicio lekerese
+
+	q = li.erase(q, q+to_replace_str.size()); // a cserelendo string kitorlese
+
+	// crbegin() -> egy constant reverse iteratort terit vissza ami a string vegere mutat
+	// crend() -> elso elottire mutat
+	for (auto r = replace_str.crbegin(); r != replace_str.crend(); ++r) 
+		q = li.insert(q, *r); // karakterenkent valo beszuras az adott sorba, mivel vektorok eseten az insert az adott pozicio ele szurja be
+}							  // ez miatt kell a vegerol haladni, beszuras utan pedig noveli a container nagysagat 1-el
+
 int char_count(Document& d)
 {
 	int count = 0;
@@ -134,10 +161,20 @@ void print(Document& d)
 int main()
 try {
 	Document my_doc;
+	string filename = "text_editor_input.txt";
+	ifstream iss {filename};
 
-    istringstream iss // ezt atirni, hogy fajlra mukodjon, mivel azt konnyebb vedeni
-    	{"Egyszer volt\nhol nem volt\nhetedhet orszagon\nis tul\n"};
+	if (!iss) 
+	{
+		cout << "File not found!" << endl;
+		return 1;
+	}
+
     iss >> my_doc;
+
+    print(my_doc);
+
+    find_replace(my_doc.begin(), my_doc.end(), "volt", "LESZ");
 
     print(my_doc);
 
