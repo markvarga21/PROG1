@@ -14,12 +14,13 @@ public:
 	Text_iterator(list<Line>::iterator ll, Line::iterator pp): ln{ll}, pos{pp} {}
 
 	char& operator*() { return *pos; }
-	Text_iterator& operator++();
+	Text_iterator& operator++(); 
 
 	bool operator==(const Text_iterator& other) const
-		{ return ln == other.ln && pos == other.pos; } // itt lehetne-e *this self-reference-el vajon?
+		{ return ln == other.ln && pos == other.pos; }
 	bool operator!=(const Text_iterator& other) const
-		{ return !(*this == other); }
+		{ return !(*this == other); } // azert lehet itt hasznalni, mivel mar definialva van
+									  // *this == megnezzuk ezt: ln == other.ln && pos == other.pos; 
 
 	Line& get_line() const { return *ln; }
     Line::iterator get_pos() const { return pos; }
@@ -40,8 +41,8 @@ namespace std { // ez az miatt kell hogy megfeleljen az iterator stl formajanak
 Text_iterator& Text_iterator::operator++()
 {
 	++pos;
-	if (pos == (*ln).end()) // vagyis egy adott sor vegen vagyok, az utolso karakternel
-	{
+	if (pos == (*ln).end()) // vagyis egy adott sor vegen vagyok, az utolso karakternel; 
+	{						// kiertekelesi sorrendre (mivel elobb az end() ertekelodne ki s nem a *) figyelve, hogy elkerjuk az adott sort
 		++ln; // sor count novelese
 		pos = (*ln).begin(); // pozicio visszahozasa az elejere
 	}
@@ -54,26 +55,27 @@ struct Document
 	Document() { line.push_back(Line{}); }
 
 	Text_iterator begin() // az adott sor elso karaktere
-		{ return Text_iterator(line.begin(), line.begin()->begin()); }
-	Text_iterator end() // az utolso karakter utani iterator/helyzet
+		{ return Text_iterator(line.begin(), line.begin()->begin()); } // karaktervektor iterator; line.begin()->begin() == (*line.begin().begin()) 
+	Text_iterator end() // az utolso karakter utani iterator/helyzet	
 	{
 		auto last = line.end();
-		--last; // tudjuk hogy a dokumentum nem ures
-		return Text_iterator(last, last->end());
+		--last; // tudjuk hogy a dokumentum nem ures;// -> mindez az miatt kell, mivel a dokumentem vegere mindig berakunk egy ures sort
+		return Text_iterator(last, last->end()); // mivel a dokumentem vegere mindig berakunk egy ures sort, es ugye nekunk meg pont az utolso nem ures sor kell
 	}
 };
 
 istream& operator>>(istream& is, Document& d)
 {
 	if (!is) return is; //hibakezeles
-	for (char ch; is.get(ch); )
+	for (char ch; is.get(ch); ) // mivel get van itt, a whitespacek is be lesznek olvasva, sima is >> -el nem, mivel ez atugorja a karaktereket
 	{
 		d.line.back().push_back(ch); // character hozzaadasa, hozzafuzese az adott sor elejtol kezdve
 		if (ch == '\n')
 			d.line.push_back(Line{}); // uj sor beszurasa
 	}
-	if (d.line.back().size()) d.line.push_back(Line{}); // utolso ures sor hozzaadasa
-	return is;
+	if (d.line.back().size()) // utolso ures sor hozzaadasa, ha esetleg nem vegzodne uj sorra; ha az utolso sor  nem ures
+		d.line.push_back(Line{}); // akkor adjunk hozza egy ures sort
+	return is; // konvencio es chaining miatt
 }
 
 template<typename Iter>
@@ -133,7 +135,7 @@ int main()
 try {
 	Document my_doc;
 
-    istringstream iss 
+    istringstream iss // ezt atirni, hogy fajlra mukodjon, mivel azt konnyebb vedeni
     	{"Egyszer volt\nhol nem volt\nhetedhet orszagon\nis tul\n"};
     iss >> my_doc;
 
