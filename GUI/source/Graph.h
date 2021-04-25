@@ -155,6 +155,8 @@ public:
 	T& operator[](int i){ return *v[i]; }
 	const T& operator[](int i) const { return *v[i]; }
 	int size() { return v.size(); }
+	// en raktam ide lol
+	int size() const { return v.size(); }
 };
 
 struct Line : Shape {
@@ -473,6 +475,75 @@ private:
 	Point a1, a2, b1, b2, c1, c2, d1, d2;
 	Point a3, b3, c3, d3;
 	int w, h, r;
+};
+
+struct Binary_tree : Shape
+{
+	Binary_tree(Point xy, int levels, string edge_style); // edge_style: "au" -> arrow up, "ad" -> arrow down, else normal
+	
+	virtual void draw_lines() const;
+	//void move(int dx, int dy);
+	int levels() const { return lvls; }
+	void set_node_label(string n, string lbl);
+protected:
+	Vector_ref<Shape> edges;
+	Vector_ref<Text> labels;
+private:
+	int lvls; // 1 szint: 1 node; 2 szint: 1 node es 2 gyerek
+};
+
+struct Binary_tree_squares : Binary_tree
+{
+	Binary_tree_squares(Point xy, int levels, string edge_style) : 
+		Binary_tree(xy, levels, edge_style) {}
+	void draw_lines() const;
+};
+
+struct Face : Circle
+{
+	Face(Point center, int radius) : Circle(center, radius),
+		left_eye(Point(center.x - radius/2, center.y - radius/2), radius/8),
+		right_eye(Point(center.x + radius/2, center.y - radius/2), radius/8) 
+		{
+			set_color(Color::visible);
+		};
+	void draw_lines() const;
+	void set_color(Color color);
+private:
+	Circle left_eye;
+	Circle right_eye;
+};
+
+struct Smiley : Face
+{
+	Smiley(Point center, int radius): 
+		Face(center, radius), 
+		mouth(Point(center.x - radius/3, center.y), radius/3, 0, -180) {};
+	void draw_lines() const;
+private:
+	Arc mouth;
+};
+
+struct Frowny : Face
+{
+	Frowny(Point center, int radius): 
+		Face(center, radius),
+		mouth(Point(center.x - radius/3, center.y + radius/3), radius/3, 0, 180) {};
+	void draw_lines() const;
+private:
+	Arc mouth;
+};
+
+struct Smiley_hat : Smiley
+{
+	Smiley_hat(Point center, int radius): Smiley(center, radius) {};
+	void draw_lines() const; 
+};
+
+struct Frowny_hat : Frowny
+{
+	Frowny_hat(Point center, int radius): Frowny(center, radius) {};
+	void draw_lines() const; 
 };
 
 //--------------------------------------------------------

@@ -1,5 +1,6 @@
 #include "Graph.h"
 #include <map>
+#include<math.h>
 
 namespace Graph_lib {
 
@@ -389,5 +390,171 @@ void Arrow::draw_lines() const
 		}
 	}
 }
+
+Binary_tree::Binary_tree(Point xy, int levels, string edge_style) : lvls(levels)
+{
+	if (levels < 0) error("A szintnek legalabb 0-nak kell lennie!");
+	if (levels == 0) return; // a fa ures
+	
+	add(xy); // ha a levels == 1, csak a gyoker van hozzaadva
+	
+	int dx = 35; // a tavolsag a legalso szinten a node-k kozott
+	int dy = 100; // a szintek kozotti tavolsag
+
+	for (int i = 2; i <= levels; ++i)
+	{
+		for (int j = 0; j < pow(2, i-1); ++j)
+		{
+			int x = xy.x - ((pow(2, i-1)-1)/2-j) * pow(2, levels-i)*dx;
+			int y = xy.y + (i-1)*dy;
+			add(Point(x,y));
+		}
+	}
+
+	// adding lines
+	const int arr_size = 5;
+	for (int i = 0; i < number_of_points()/2; ++i)
+	{
+		if (edge_style == "ad")
+		{
+			edges.push_back(new Arrow(point(i), Point(point(2*i+1).x, point(2*i+1).y-12), false, true, arr_size));
+			edges.push_back(new Arrow(point(i), Point(point(2*i+2).x, point(2*i+2).y-12), false, true, arr_size));
+		}
+		else if (edge_style=="au") {    // arrow up
+            edges.push_back(new Arrow(point(i), Point(point(2*i+1).x, point(2*i+1).y-12), true, false, arr_size));
+			edges.push_back(new Arrow(point(i), Point(point(2*i+2).x, point(2*i+2).y-12), true, false, arr_size));
+        }
+        else { // normal line
+        	edges.push_back(new Line(point(i), point(2*i+1)));
+        	edges.push_back(new Line(point(i), point(2*i+2)));
+        }
+	}
+
+	// add label - ures alapvetoen
+	for (int i = 0; i < number_of_points(); ++i)
+		labels.push_back(new Text(Point(point(i).x+13,point(i).y-13),""));
+}
+// -------------------------------------------------------------------------
+
+void Binary_tree::draw_lines() const
+{
+    if (color().visibility()) {
+        for (int i = 0; i<edges.size(); ++i)
+            edges[i].draw();
+
+        // draw labels
+        for (int i = 0; i<number_of_points(); ++i)
+            labels[i].draw();
+
+        // draw circles
+        const int r = 12;
+        for (int i = 0; i<number_of_points(); ++i)
+            fl_arc(point(i).x-r,point(i).y-r,r+r,r+r,0,360);
+    }
+}
+
+/*void Binary_tree::move(int dx, int dy)
+{
+    Shape::move(dx,dy);
+    for (int i = 0; i<edges.size(); ++i)
+        edges[i].move(dx,dy);
+    for (int i = 0; i<number_of_points(); ++i)
+            labels[i].move(dx,dy);
+}*/
+
+//------------------------------------------------------------------
+
+// for navigating left and right in the tree use l and r and the combination of these
+void Binary_tree::set_node_label(string n, string lbl)
+{
+    if (n.size()<1 || n.size()>lvls) error("set_node_label: illegal node string ",n);
+    istringstream iss(n);
+    char ch;
+    iss.get(ch);    // look at first character
+    if (n.size()==1) {
+        switch (ch) {
+        case 'l':
+        case 'r':
+            labels[0].set_label(lbl);
+            return;
+        default:
+            error("set_node_label: illegal character in node string!");
+        }
+    }
+    int n_idx = 0;  // node index in point list
+    while (iss.get(ch)) {
+        switch (ch) {
+        case 'l':
+            n_idx = 2*n_idx + 1;
+            break;
+        case 'r':
+            n_idx = 2*n_idx + 2;
+            break;
+        default:
+            error("set_node_label: illegal character in node string!");
+        }
+    }
+    labels[n_idx].set_label(lbl);
+}
+
+//------------------------------------------------------
+
+void Binary_tree_squares::draw_lines() const
+{
+    if (color().visibility()) {
+        for (int i = 0; i<edges.size(); ++i)
+            edges[i].draw();
+
+        // draw labels
+        for (int i = 0; i<number_of_points(); ++i)
+            labels[i].draw();
+
+        // draw squares
+        const int s = 12;
+        for (int i = 0; i<number_of_points(); ++i)
+            fl_rect(point(i).x-s,point(i).y-s,2*s,2*s);
+    }
+}
+
+void Face::draw_lines() const
+{
+	Circle::draw_lines();
+	left_eye.draw();
+	right_eye.draw();
+}
+
+void Face::set_color(Color color)
+{
+	Shape::set_color(color);
+	left_eye.set_color(color);
+	right_eye.set_color(color);
+}
+
+void Smiley::draw_lines() const
+{
+	Face::draw_lines();
+	mouth.draw_lines();
+}
+
+void Frowny::draw_lines() const
+{
+	Face::draw_lines();
+	mouth.draw_lines();
+}
+
+void Smiley_hat::draw_lines() const
+{
+	Smiley::draw_lines();
+	fl_line(center().x-radius(), center().y-radius(), center().x+radius(), center().y-radius());
+	fl_arc(center().x-radius(), center().y-2*radius(), radius()*2, radius()*2, 0, 180);
+}
+
+void Frowny_hat::draw_lines() const
+{
+	Frowny::draw_lines();
+	fl_line(center().x-radius(), center().y-radius(), center().x+radius(), center().y-radius());
+	fl_arc(center().x-radius(), center().y-2*radius(), radius()*2, radius()*2, 0, 180);
+}
+
 //-----------------------------
 } //end Graph
