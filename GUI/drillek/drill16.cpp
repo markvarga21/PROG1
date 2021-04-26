@@ -2,6 +2,10 @@
 #include "../source/Graph.h"
 #include "../source/std_lib_facilities.h"
 
+/*
+g++ drill16.cpp ../source/Graph.cpp ../source/Window.cpp ../source/GUI.cpp ../source/Simple_window.cpp ../source/Lines_window.cpp -o drill16 `fltk-config --ldflags --use-images`
+*/
+
 int main()
 try {
 
