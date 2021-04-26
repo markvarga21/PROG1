@@ -12,7 +12,7 @@ class Scale
     double scale;
 public:
     Scale(int b, int vb, double s) : cbase(b), vbase(vb), scale(s) {}
-    int operator()(int v) const { return cbase + (v-vbase)*scale; }
+    int operator()(int v) const { return cbase + (v-vbase)*scale; } // a sajat koordinatarendszerunknek megfelelo koordinata szamolasaert felelos
 };  
 
 struct Distribution
@@ -57,10 +57,10 @@ try {
     constexpr int base_year = 1960;
     constexpr int end_year = 2040;
 
-    constexpr double xscale = double(xlength)/(end_year-base_year);
-    constexpr double yscale = double(ylength)/100;      
+    constexpr double xscale = double(xlength)/(end_year-base_year); // ezaltal egyenletesen felosztja az xlenght-et
+    constexpr double yscale = double(ylength)/100;  // a szerepe ugyan az mint a fentinek
 
-    Scale xs{xoffset, base_year, xscale};
+    Scale xs{xoffset, base_year, xscale}; // ez arra jo hogy a kepernyo graph reszet ugy tudjuk hasznalni mint egy sima koordinata rendszert
     Scale ys{ymax-yoffset, 0, -yscale};
 
     Simple_window win {Point{100, 100}, xmax, ymax, "Aging Japan"};
@@ -72,7 +72,7 @@ try {
 
     Axis y{Axis::y, Point{xoffset, ymax-yoffset}, ylength, 10, "perc. of population"};
 
-    Line current_year{Point{xs(2021), ys(0)}, Point{xs(2021), ys(100)}};
+    Line current_year{Point{xs(2021), ys(0)}, Point{xs(2021), ys(100)}}; // xs(valami) ==> a valami ev a mi ,,sajat,, koordinatarendszerunkben
     current_year.set_style(Line_style::dash);
 
     Open_polyline children;
@@ -88,12 +88,14 @@ try {
         if (d.year < base_year || end_year < d.year) error("Year out of range!");
         if (d.young+d.middle+d.old != 100) error("Percentages do not add up!");
 
-        const int x = xs(d.year);
-        children.add(Point{x, ys(d.young)});
+        const int x = xs(d.year); // az hogy hova rajzolom a pontokat az minden beolvasasnal fix
+        children.add(Point{x, ys(d.young)}); // minden esetben a kiszamolt pontot hozzaadja az openpolylinehoz
         adults.add(Point{x, ys(d.middle)});
         aged.add(Point{x, ys(d.old)});
     }
 
+
+    // kirajzolasok
     Text children_label{Point{20, children.point(0).y}, "Age 0-14"};
     children.set_color(Color::red);
     children_label.set_color(Color::red);
