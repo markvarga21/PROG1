@@ -3,6 +3,7 @@
 
 #include "Point.h"
 #include <vector>
+#include <functional>
 #include "fltk.h"
 #include "std_lib_facilities.h"
 
@@ -126,6 +127,7 @@ protected:
 	Shape(initializer_list<Point> lst) { for (Point p : lst) add(p); }
 	void add(Point p) { points.push_back(p); }
 	void set_point(int i, Point p) { points[i] = p; }
+	void clear_points() { points.clear(); }
 	virtual void draw_lines() const;
 
 private:
@@ -293,32 +295,36 @@ public:
 
 typedef double Fct(double);
 
-struct Function : Shape {
+struct Function : Shape { // itt nem kell fuggvenypointer, mivel van typedef
 	Function(Fct f, double r1, double r2, Point orig, int count = 100, double xscale = 25, double yscale = 25);
 };
 
-/*struct myFct : Shape {
-	myFct(Fct ff, double rr1, double rr2, Point oorig, int ccount = 100, double xxscale = 25, double yyscale = 25);
-	void reset(Fct ff2, double rr11, double rr22, Point oorig2, int ccount2 = 100, double xxscale2 = 25, double yyscale2 = 25)
-	{
-		f = ff2;
-		r1 = rr1;
-		r2 = rr2;
-		orig = orig2;
-		count = ccount2;
-		xscale = xxscal2;
-		yscal = yyscale2;
-	}
+// --------------------------- MY FUNCTION -------------------
+template<typename T>
+struct My_function : Function 
+{
+    My_function(Fct f, double r1, double r2, Point orig, int count = 100,
+                  double xscale = 25, double yscale = 25, T precision = 1.0);
+    void reset_fct(Fct f) { fct = f; reset(); } // a reset ujraszamolja a dolgokat
+    void reset_range(double r1, double r2);
+    void reset_orig(Point orig) { origin = orig; reset(); }
+    void reset_count(int count);
+    void reset_xscale(double xscale);
+    void reset_yscale(double yscale);
+    void reset_precision(T precision) { prec = precision; reset(); }
 private:
-	Fct f;
-	double r1;
-	double r2;
-	Point orig;
-	int count;
-	double xscale;
-	double yscale;
+    void reset();
+    Fct* fct;
+    double range1;
+    double range2;
+    Point origin;
+    int c;
+    double xsc;
+    double ysc;
+    T prec;
 };
-*/
+
+// ------------------------- END OF MY FUNCTION -------------------
 
 struct Axis : Shape {
 	enum Orientation { x, y, z };

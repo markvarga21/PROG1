@@ -1,6 +1,7 @@
 #include "Graph.h"
 #include <map>
 #include<math.h>
+#include<functional>
 
 namespace Graph_lib {
 
@@ -253,17 +254,76 @@ Function::Function(Fct f, double r1, double r2, Point xy, int count, double xsca
 	}
 }
 
-/*myFct::myFct(Fct ff, double rr1, double rr2, Point oorig, int ccount = 100, double xxscale = 25, double yyscale = 25)
+
+template class My_function<int>;
+template class My_function<double>;
+template class My_function<float>;
+template class My_function<long>;
+template class My_function<long long>;
+
+// ------------------- MY FUNCTION IMPLEMENTATION ------------------
+//------------------------------------------------------------------------------
+template<typename T>
+My_function<T>::My_function(Fct f, double r1, double r2, Point xy,int count,
+                             double xscale, double yscale, T precision)
+    :Function(f,r1,r2,xy,count,xscale,yscale),
+     fct(f), range1(r1), range2(r2), origin(xy),
+     c(count), xsc(xscale), ysc(yscale), prec(precision)
 {
-	if (r2-r1<=0) error ("Rossz range!");
-	if (count<=0) error ("Rossz count!");
-	double dist = (r2-r1)/count;
-	double r = r1;
-	for (int i = 0; i < count; ++i){
-		add(Point(xy.x+int(r*xscale), xy.y-int(f(r)*yscale)));
-		r += dist;
-	}
-}*/
+    reset();
+}
+
+//------------------------------------------------------------------------------
+
+template<typename T>
+void My_function<T>::reset_range(double r1, double r2) {
+    if (r2<=r1) error("Invalid range!");
+    range1 = r1;
+    range2 = r2;
+    reset();
+}
+
+//------------------------------------------------------------------------------
+
+template<typename T>
+void My_function<T>::reset_count(int count) {
+    if (count<=0) error("Negativ count!");
+    c = count;
+    reset();
+}
+
+//------------------------------------------------------------------------------
+template<typename T>
+void My_function<T>::reset_xscale(double xscale) {
+    if (xscale==0) error("Az xScale nem lehet 0!");
+    xsc = xscale;
+    reset();
+}
+
+//------------------------------------------------------------------------------
+template<typename T>
+void My_function<T>::reset_yscale(double yscale) {
+    if (yscale==0) error("Az yScale nem lehet 0!");
+    ysc = yscale;
+    reset();
+}
+
+//------------------------------------------------------------------------------
+template<typename T>
+void My_function<T>::reset() // maga a kiszmaolas es egyben a kirajzolas is
+{
+    double dist = (range2-range1)/c;
+    double r = range1;
+    clear_points();
+    for (int i = 0; i<c; ++i) {
+    	int x = origin.x+int(int(r*xsc)/prec)*prec;
+    	int y = origin.y-int(int(fct(r)*ysc)/prec)*prec;
+        add(Point(x, y));
+        r += dist;
+    }
+}
+
+//------------------------------------- END OF MY FUNCTION ----------------------------------------
 
 Axis::Axis(Orientation d, Point xy, int length, int n, string lab )
 	:label(Point(0,0), lab)
