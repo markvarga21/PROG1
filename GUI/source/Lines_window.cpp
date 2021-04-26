@@ -33,10 +33,10 @@ Lines_window::Lines_window(Point xy, int w, int h, const string& title)
 	line_style_menu.attach(new Button{Point{0,0},0,0,"dash", cb_dash});
 	line_style_menu.attach(new Button{Point{0,0},0,0,"dot", cb_dot});
 	//Masik ket fo menu attacholasa
-	attach(color_menu);
-	attach(line_style_menu);
+	attach(color_menu); 
+	attach(line_style_menu); 
 
-	color_menu.hide(); //alapvetoen hideolva vannak a menuk, csak a buttonok latszodnak
+	color_menu.hide(); //alapvetoen hideolva vannak a menuk, csak a buttonok latszodnak, mivel default-bol nem kell/szabad latszodjanak
 	line_style_menu.hide(); //alapvetoen hideolva vannak a menuk, csak a buttonok latszodnak
 
 	//Gombok felrakasa, menu es line style

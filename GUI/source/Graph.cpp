@@ -513,21 +513,12 @@ void Binary_tree::draw_lines() const
     }
 }
 
-/*void Binary_tree::move(int dx, int dy)
-{
-    Shape::move(dx,dy);
-    for (int i = 0; i<edges.size(); ++i)
-        edges[i].move(dx,dy);
-    for (int i = 0; i<number_of_points(); ++i)
-            labels[i].move(dx,dy);
-}*/
-
 //------------------------------------------------------------------
 
 // for navigating left and right in the tree use l and r and the combination of these
 void Binary_tree::set_node_label(string n, string lbl)
 {
-    if (n.size()<1 || n.size()>lvls) error("set_node_label: illegal node string ",n);
+    if (n.size()<1 || n.size()>lvls) error("illegal node string",n);
     istringstream iss(n);
     char ch;
     iss.get(ch);    // look at first character
@@ -538,7 +529,7 @@ void Binary_tree::set_node_label(string n, string lbl)
             labels[0].set_label(lbl);
             return;
         default:
-            error("set_node_label: illegal character in node string!");
+            error("illegal character in node string!");
         }
     }
     int n_idx = 0;  // node index in point list
@@ -551,7 +542,7 @@ void Binary_tree::set_node_label(string n, string lbl)
             n_idx = 2*n_idx + 2;
             break;
         default:
-            error("set_node_label: illegal character in node string!");
+            error("illegal character in node string!");
         }
     }
     labels[n_idx].set_label(lbl);

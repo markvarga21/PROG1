@@ -17,7 +17,7 @@ struct Lines_window : Graph_lib::Window
 
 	//--------------------- CALLBACKS --------------------
 	//Color's callbacks
-	static void cb_red(Address, Address);
+	static void cb_red(Address, Address); // ez(ek) iranyitja at a triggert magahoz az actionhoz/vegrehajtashoz
 	static void cb_blue(Address, Address);
 	static void cb_black(Address, Address);
 	static void cb_menu(Address, Address);
@@ -29,12 +29,12 @@ struct Lines_window : Graph_lib::Window
 
 	//----------------------- ACTIONS ---------------------
 	//Color actions
-	void red_pressed() { change(Color::red); hide_menu();}
+	void red_pressed() { change(Color::red); hide_menu();} 
 	void blue_pressed() { change(Color::blue); hide_menu();}
 	void black_pressed() { change(Color::black); hide_menu();}
 	void menu_pressed() { menu_button.hide(); color_menu.show(); }
 	//Hide actions
-	void hide_menu() { color_menu.hide(); menu_button.show(); }
+	void hide_menu() { color_menu.hide(); menu_button.show(); } // hideolni kell a menut, mivel maskepp mindketto latszodna, s egymas felett lennenek
 	void hide_line_style_menu() { line_style_menu.hide(); line_style_menu_button.show(); }
 	//Changing actions
 	void change_line_style(Line_style ls) {lines.set_style(ls); }
