@@ -2,9 +2,9 @@
 #include<math.h>
 #include<exception>
 
-int fac_iterative(int n)
+unsigned long long fac_iterative(int n)
 {
-	int r = 1;
+	long long r = 1;
 	while(n > 1) {
 		r *= n;
 		--n;
@@ -12,7 +12,7 @@ int fac_iterative(int n)
 	return r;
 }
 
-int fac_recursive(int n)
+unsigned long long fac_recursive(int n)
 {
 	return (n>1)?(n*fac_recursive(n-1)):1;
 }
@@ -22,8 +22,8 @@ try {
 	int number = 0;
 	std::cin >> number;
 
-	int numb_fac_iter = fac_iterative(number);
-	int numb_fac_rec = fac_recursive(number);
+	unsigned long long numb_fac_iter = fac_iterative(number);
+	unsigned long long numb_fac_rec = fac_recursive(number);
 
 	std::cout << number << "! == " << numb_fac_iter << "(Iterative way)" << std::endl;
 	std::cout << number << "! == " << numb_fac_rec << "(Recursive way)" << std::endl;  
