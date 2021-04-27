@@ -25,11 +25,11 @@ try {
 	const int leptek = 5;
 
 	while (n < max_n) {
-	win.attach(MF);
-	win.wait_for_button();
-	win.detach(MF);
-	MF.reset_precision(precision+n);
-	n += leptek;
+		win.attach(MF);
+		win.wait_for_button();
+		win.detach(MF);
+		MF.reset_precision(precision+n);
+		n += leptek;
 	}
 
 } catch(exception& e) {
