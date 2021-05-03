@@ -1,4 +1,4 @@
-//g++ vector_002.cpp -o vec002 -Wall
+// g++ vector_002.cpp -o vec002 -Wall
 #include "std_lib_facilities.h"
 
 class My_out_of_range{};
