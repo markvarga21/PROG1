@@ -1,0 +1,15 @@
+- c es c++ -> Bell Labs
+- C nyelv <=> C89
+- a C majdnem a c++ reszhalmaza
+- majdnem minden C program fordithato g++ -al
+- c++ ban erosebb a tipusellenorzes
+- const makrokkal, de ne nagyon makrozzunk
+- C-ben irasnal a c++ kulcsszavakat hanyagoljuk, hogy az hasznalhato legyen C++ szempontjabol is
+- C-ben a fuggeny szignaturaja csak a nev, meg C++ban a nev es a parameterek egyuttese
+- kevesebb hibauzenetet kapunk mint C++ben
+- C++ban ne hasznaljuk a malloc es a free-t
+- makrokat az elofordito kezeli le
+- makro: #define max 30
+- 'man malloc' C reference manual, ugyan olyan mint a C++ reference manual csak ez nem online
+- linuxban minden csatlakoztatott periferia fajlkent jelenik meg
+- valami ^ valami2 (xor jele == '^') (?)
